@@ -1,18 +1,23 @@
 package laughedelic.probot
 
-import scala.scalajs.js
+import scala.scalajs.js, js.annotation._
 import laughedelic.octokit.rest.Octokit
 
-@js.native
-trait Context extends js.Object {
-  /** An authenticated GitHub API client */
-  val github: Octokit = js.native
+/** Helpers for extracting information from the webhook event, which can be
+  * passed to GitHub API calls.
+  *
+  * @param github An authenticated GitHub API client.
+  */
+@js.native @JSImport("probot", "Context")
+class Context(
+  event: js.Any,
+  val github: Octokit,
+  val log: LoggerWithTarget,
+) extends js.Object {
+  val id: String = js.native
 
   /** The webhook event payload */
   val payload: ContextPayload = js.native
-
-  /** A logger */
-  val log: LoggerWithTarget = js.native
 
   /** @return `true` if the actor on the event was a bot */
   def isBot(): Boolean = js.native
@@ -46,7 +51,7 @@ trait Context extends js.Object {
   def config(
     fileName: String,
     defaultConfig: js.Object = js.native
-  ): js.Promise[js.Object] = js.native
+  ): js.Promise[js.Dynamic] = js.native
 }
 
 @js.native

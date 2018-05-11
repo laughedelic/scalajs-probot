@@ -1,10 +1,12 @@
 package laughedelic.probot
 
-import scala.scalajs.js, js.|
+import scala.scalajs.js, js.|, js.annotation._
 import io.scalajs.npm.express
 
-@js.native
-trait Robot extends js.Object {
+@js.native @JSImport("probot", "Robot")
+class Robot(
+  options: RobotOptions = js.native
+) extends js.Object {
 
   /** A logger */
   val log: LoggerWithTarget = js.native
@@ -37,3 +39,10 @@ trait Robot extends js.Object {
     */
   def route(path: String): express.Router = js.native
 }
+
+class RobotOptions(
+  val app: () => String,
+  val cache: js.Any, // RobotCache
+  val router: js.UndefOr[express.Router] = js.undefined,
+  val catchErrors: Boolean,
+) extends js.Object
