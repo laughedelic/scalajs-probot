@@ -40,4 +40,5 @@ ghreleaseAssets := Seq()
 
 libraryDependencies ++= Seq(
   "io.scalajs.npm" %%% "express" % "0.4.2",
+  "laughedelic" %%% "scalajs-octokit" % "3071db72",
 )

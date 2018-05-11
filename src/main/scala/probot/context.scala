@@ -1,12 +1,12 @@
 package laughedelic.probot
 
 import scala.scalajs.js
+import laughedelic.octokit.rest.Octokit
 
 @js.native
 trait Context extends js.Object {
   /** An authenticated GitHub API client */
-  // TODO: facades for @octokit/rest (GitHubApi)
-  val github: js.Any = js.native
+  val github: Octokit = js.native
 
   /** The webhook event payload */
   val payload: ContextPayload = js.native
