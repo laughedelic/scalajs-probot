@@ -37,3 +37,7 @@ bintrayReleaseOnPublish := !isSnapshot.value
 bintrayPackageLabels := Seq("scalajs", "github", "probot", "facades")
 
 ghreleaseAssets := Seq()
+
+libraryDependencies ++= Seq(
+  "io.scalajs.npm" %%% "express" % "0.4.2",
+)

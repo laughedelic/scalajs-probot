@@ -1,6 +1,7 @@
 package laughedelic.probot
 
 import scala.scalajs.js, js.|
+import io.scalajs.npm.express
 
 @js.native
 trait Robot extends js.Object {
@@ -29,12 +30,12 @@ trait Robot extends js.Object {
   ): Unit = js.native
 
   /**
-   * Get an {@link http://expressjs.com|express} router that can be used to
+   * Get an [[link http://expressjs.com express]] router that can be used to
    * expose HTTP endpoints
    *
    * @param path the prefix for the routes
-   * @see http://expressjs.com/en/4x/api.html#router
+   * @return an express [[express.Router]] to expose new HTTP endpoints
+   * @see [[http://expressjs.com/en/4x/api.html#router]]
    */
-  // TODO: return express.Router
-  def route(path: String): js.Any = js.native
+  def route(path: String): express.Router = js.native
 }
