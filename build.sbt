@@ -38,6 +38,7 @@ bintrayPackageLabels := Seq("scalajs", "github", "probot", "facades")
 
 ghreleaseAssets := Seq()
 
+resolvers += Resolver.bintrayRepo("laughedelic", "maven")
 libraryDependencies ++= Seq(
   "io.scalajs.npm" %%% "express" % "0.4.2",
   "laughedelic" %%% "scalajs-octokit" % "3071db72",
