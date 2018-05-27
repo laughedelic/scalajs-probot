@@ -1,7 +1,6 @@
 package laughedelic.probot
 
 import scala.scalajs.js, js.annotation._
-import laughedelic.octokit.rest.Octokit
 
 /** Helpers for extracting information from the webhook event, which can be
   * passed to GitHub API calls.
@@ -11,7 +10,7 @@ import laughedelic.octokit.rest.Octokit
 @js.native @JSImport("probot", "Context")
 class Context(
   event: js.Any,
-  val github: Octokit,
+  val github: GitHubAPI,
   val log: LoggerWithTarget,
 ) extends js.Object {
   val id: String = js.native

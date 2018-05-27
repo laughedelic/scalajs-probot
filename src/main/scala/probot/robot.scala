@@ -2,7 +2,6 @@ package laughedelic.probot
 
 import scala.scalajs.js, js.|, js.annotation._
 import io.scalajs.npm.express
-import laughedelic.octokit.rest.Octokit
 
 @js.native @JSImport("probot", "Robot")
 class Robot(
@@ -62,7 +61,7 @@ class Robot(
   def auth(
     id: Int = js.native,
     log: LoggerWithTarget = js.native
-  ): js.Promise[Octokit] = js.native
+  ): js.Promise[GitHubAPI] = js.native
 }
 
 class RobotOptions(
