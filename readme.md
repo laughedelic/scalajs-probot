@@ -7,13 +7,21 @@
 [![](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](https://www.tldrlegal.com/l/mpl-2.0)
 [![](https://img.shields.io/badge/contact-gitter_chat-dd1054.svg)](https://gitter.im/laughedelic/scalajs-probot)
 
-This project contains Scala.js facades for the Probot framework used to build GitHub Apps on Node.js.
+This project contains Scala.js facades for the [Probot] framework used to build GitHub Apps on Node.js.
 
 ## 🚧 WORK IN PROGRESS 🚧
 
 _This project is in active development, there are no published releases yet. Things may break without a warning, so don't rely on it._
 
+If you want to experiment with it and write a GitHub bot in Scala.js, don't hesitate to write to the [Gitter chat](https://gitter.im/laughedelic/scalajs-probot) and ask any questions. And if you're looking for ideas, check out the dedicated [probot/ideas](https://github.com/probot/ideas) repo.
+
 ## Usage
+
+First of all you should head to the [Probot docs](https://probot.github.io/docs/) and read at least the Getting Started part. It explains the basics very well and gives you a general understanding of how this framework functions.
+
+For interacting with the GitHub API this library depends on the Scala.js facades for the Octokit library: [scalajs-octokit](https://github.com/laughedelic/scalajs-octokit).
+
+For the usage example refer to the [scalafmt-probot](https://github.com/laughedelic/scalafmt-probot) project. The project setup will be simplified in the future.
 
 ### Installation
 
@@ -28,10 +36,10 @@ _This project is in active development, there are no published releases yet. Thi
 
     * If it's a Scala.js project use [scalajs-bundler] and add to your `build.sbt`:
         ```scala
-        Compile/npmDependencies += "@octokit/rest" -> "7.0.0-typescript.4"
+        Compile/npmDependencies += "probot" -> "7.0.0-typescript.4"
         ```
 
-    These facades are based on the [TypeScript version of Probot](https://github.com/probot/probot/pull/372) which is not released yet.
+    These facades are based on the [TypeScript version of Probot](https://github.com/probot/probot/pull/372) which is not released yet, but is available under the `next` version tag.
 
 2. Add facades dependency to your `build.sbt`:
     ```scala
