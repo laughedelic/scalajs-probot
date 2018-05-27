@@ -10,12 +10,12 @@ import scala.scalajs.js, js.|
 @js.native
 trait Logger extends js.Object {
 
-  def trace(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
-  def debug(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
-  def info(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
-  def warn(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
-  def error(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
-  def fatal(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
+  def trace(msg: js.Any | String, params: js.Any*): Unit = js.native
+  def debug(msg: js.Any | String, params: js.Any*): Unit = js.native
+  def info(msg: js.Any | String, params: js.Any*): Unit = js.native
+  def warn(msg: js.Any | String, params: js.Any*): Unit = js.native
+  def error(msg: js.Any | String, params: js.Any*): Unit = js.native
+  def fatal(msg: js.Any | String, params: js.Any*): Unit = js.native
 }
 
 @js.native
@@ -24,10 +24,11 @@ trait LoggerWithTarget extends Logger {
   def child(attrs: LoggerChildArgs): LoggerWithTarget = js.native
 
   /** Calling `log(...)` is equivalent to `log.info(...)` */
-  def apply(msg: js.Error | js.Object | js.Any, params: js.Any*): Unit = js.native
+  def apply(msg: js.Any | String, params: js.Any*): Unit = js.native
 }
 
 class LoggerChildArgs(
+  val options: js.UndefOr[js.Object] = js.undefined,
   val name: js.UndefOr[String] = js.undefined,
   val id: js.UndefOr[String] = js.undefined,
   val installation: js.UndefOr[String] = js.undefined

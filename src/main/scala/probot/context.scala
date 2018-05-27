@@ -66,6 +66,9 @@ trait ContextIssue extends ContextRepo {
 }
 
 
+// NOTE: at the moment it's a generic type with a few common fields, but it
+// should depend on the particular webhook+action. See
+// https://github.com/probot/probot/pull/372#discussion_r180436917
 @js.native
 trait ContextPayload extends js.Object {
   val repository: PayloadRepository = js.native
@@ -76,11 +79,24 @@ trait ContextPayload extends js.Object {
   val installation: PayloadInstallation = js.native
 }
 
+object ContextPayload {
+  implicit class ContextPayloadExt(val payload: ContextPayload) extends AnyVal {
+    def asDynamic: js.Dynamic = payload.asInstanceOf[js.Dynamic]
+  }
+}
+
 @js.native
 trait PayloadRepository extends js.Object {
   val full_name: String = js.native
   val name: String = js.native
   val owner: PayloadRepositoryOwner = js.native
+  val html_url: String = js.native
+}
+
+object PayloadRepository {
+  implicit class PayloadRepositoryExt(val repo: PayloadRepository) extends AnyVal {
+    def asDynamic: js.Dynamic = repo.asInstanceOf[js.Dynamic]
+  }
 }
 
 @js.native
@@ -89,9 +105,23 @@ trait PayloadRepositoryOwner extends js.Object {
   val name: String = js.native
 }
 
+object PayloadRepositoryOwner {
+  implicit class PayloadRepositoryOwnerExt(val owner: PayloadRepositoryOwner) extends AnyVal {
+    def asDynamic: js.Dynamic = owner.asInstanceOf[js.Dynamic]
+  }
+}
+
 @js.native
 trait PayloadIssue extends js.Object {
   val number: Int = js.native
+  val html_url: String = js.native
+  val body: String = js.native
+}
+
+object PayloadIssue {
+  implicit class PayloadIssueExt(val issue: PayloadIssue) extends AnyVal {
+    def asDynamic: js.Dynamic = issue.asInstanceOf[js.Dynamic]
+  }
 }
 
 @js.native
@@ -99,7 +129,19 @@ trait PayloadSender extends js.Object {
   val `type`: String = js.native
 }
 
+object PayloadSender {
+  implicit class PayloadSenderExt(val sender: PayloadSender) extends AnyVal {
+    def asDynamic: js.Dynamic = sender.asInstanceOf[js.Dynamic]
+  }
+}
+
 @js.native
 trait PayloadInstallation extends js.Object {
   val id: String = js.native
+}
+
+object PayloadInstallation {
+  implicit class PayloadInstallationExt(val inst: PayloadInstallation) extends AnyVal {
+    def asDynamic: js.Dynamic = inst.asInstanceOf[js.Dynamic]
+  }
 }
