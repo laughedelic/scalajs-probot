@@ -50,6 +50,47 @@ For the usage example refer to the [scalafmt-probot](https://github.com/laughede
 
 </details>
 
+### Example
+
+Here's a translation of the [Hello World example](https://probot.github.io/docs/hello-world/) from the Probot docs to Scala:
+
+```scala
+import scala.scalajs.js, js.annotation._
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
+import laughedelic.probot._
+
+object HelloWorld {
+
+  @JSExportTopLevel("probot")
+  def probot(robot: Robot): Unit = {
+
+    robot.on("issues.opened") { context =>
+      // Post a comment on every new issue
+      context.github.issues.createComment(
+        owner  = context.issue().owner,
+        repo   = context.issue().repo,
+        number = context.issue().number,
+        body   = "Hello World! 👋"
+      )
+    }
+  }
+}
+```
+
+The translation from JavaScript is pretty straightforward. A couple of things to notice:
+
+* In JS all GitHub API parameters are just objects, so it's possible to reuse `context.issue` and write
+    ```javascript
+    context.github.issues.createComment(
+      // context.issue appends given object to { owner: ..., repo: ..., number: ... }
+      context.issue({body: 'Hello World!'})
+    )
+    ```
+    In Scala `createComment` method has typed arguments, so we have to pass those values from the context explicitly. I don't think it's too verbose, but if anybody has an idea how to improve it, let me know.
+* `{ context => ... }` callback returns a `Future` which is converted to a `js.Promise`, this is why the execution context import is needed.
+
+For a more complex example and the general project setup refer to the [scalafmt-probot](https://github.com/laughedelic/scalafmt-probot) project.
+
 
 [Scala.js]: https://www.scala-js.org
 [Probot]: https://probot.github.io
