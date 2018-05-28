@@ -1,6 +1,7 @@
 package laughedelic.probot
 
-import scala.scalajs.js, js.|, js.annotation._
+import scala.scalajs.js, js.|, js.annotation._, js.JSConverters._
+import scala.concurrent.{ Future, ExecutionContext }
 import io.scalajs.npm.express
 
 @js.native @JSImport("probot", "Robot")
@@ -36,7 +37,7 @@ class Robot(
     */
   def on(
     eventName: String | js.Array[String],
-    callback: js.Function1[Context, Unit],
+    callback: js.Function1[Context, js.Promise[js.Any]],
   ): Unit = js.native
 
   /** Get an [[http://expressjs.com express]] router that can be used to expose
@@ -75,8 +76,12 @@ object Robot {
 
   implicit class RobotExt(val robot: Robot) extends AnyVal {
 
-    def on(event: String | js.Array[String])(
-      callback: Context => Unit
-    ): Unit = robot.on(event, callback)
+    def on(eventNames: String*)(
+      callback: Context => Future[js.Any]
+    )(implicit ec: ExecutionContext): Unit =
+      robot.on(
+        eventNames.toJSArray,
+        callback(_).toJSPromise
+      )
   }
 }
