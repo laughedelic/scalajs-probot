@@ -4,9 +4,9 @@ import scala.scalajs.js, js.|, js.annotation._, js.JSConverters._
 import scala.concurrent.{ Future, ExecutionContext }
 import io.scalajs.npm.express
 
-@js.native @JSImport("probot", "Robot")
-class Robot(
-  options: RobotOptions = js.native
+@js.native @JSImport("probot", "Application")
+class Application(
+  options: Application.Options = js.native
 ) extends js.Object {
 
   /** A logger */
@@ -16,8 +16,8 @@ class Robot(
   val router: express.Router = js.native
   val catchErrors: js.UndefOr[Boolean] = js.native
 
-  // TODO: define RobotCache
-  // val cache: RobotCache = js.native
+  // TODO: define Cache
+  // val cache: Cache = js.native
   // TODO: add dependency on promise-events?
   // val events: EventEmitter = js.native
 
@@ -47,7 +47,7 @@ class Robot(
     * @return an express [[express.Router]] to expose new HTTP endpoints
     * @see [[http://expressjs.com/en/4x/api.html#router]]
     */
-  def route(path: String): express.Router = js.native
+  def route(path: String = js.native): express.Router = js.native
 
   /** Authenticate and get a GitHub client that can be used to make API calls.
     * You'll probably want to use `context.github` instead.
@@ -65,21 +65,21 @@ class Robot(
   ): js.Promise[GitHubAPI] = js.native
 }
 
-class RobotOptions(
-  val app: () => String,
-  val cache: js.Any, // RobotCache
-  val router: js.UndefOr[express.Router] = js.undefined,
-  val catchErrors: Boolean,
-) extends js.Object
+object Application {
 
-object Robot {
+  class Options(
+    val app: () => String,
+    val cache: js.Any, // Cache
+    val router: js.UndefOr[express.Router] = js.undefined,
+    val catchErrors: Boolean,
+  ) extends js.Object
 
-  implicit class RobotExt(val robot: Robot) extends AnyVal {
+  implicit class ApplicationExt(val app: Application) extends AnyVal {
 
     def on(eventNames: String*)(
       callback: Context => Future[js.Any]
     )(implicit ec: ExecutionContext): Unit =
-      robot.on(
+      app.on(
         eventNames.toJSArray,
         callback(_).toJSPromise
       )

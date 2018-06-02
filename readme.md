@@ -62,9 +62,9 @@ import laughedelic.probot._
 object HelloWorld {
 
   @JSExportTopLevel("probot")
-  def probot(robot: Robot): Unit = {
+  def probot(app: Application): Unit = {
 
-    robot.on("issues.opened") { context =>
+    app.on("issues.opened") { context =>
       // Post a comment on every new issue
       context.github.issues.createComment(
         owner  = context.issue().owner,
