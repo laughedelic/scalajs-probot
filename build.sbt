@@ -41,5 +41,6 @@ ghreleaseAssets := Seq()
 resolvers += Resolver.bintrayRepo("laughedelic", "maven")
 libraryDependencies ++= Seq(
   "io.scalajs.npm" %%% "express" % "0.4.2",
+  "io.scalajs" %%% "nodejs" % "0.4.2",
   "laughedelic" %%% "scalajs-octokit" % "aa984a0d",
 )
