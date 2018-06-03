@@ -21,6 +21,8 @@ class Application(
   // TODO: add dependency on promise-events?
   // val events: EventEmitter = js.native
 
+  def receive(event: WebhookEvent): js.Promise[js.Any] = js.native
+
   /** Listen for [[https://developer.github.com/webhooks GitHub webhooks]],
     * which are fired for almost every significant action that users take on
     * GitHub.
@@ -85,3 +87,12 @@ object Application {
       )
   }
 }
+
+class WebhookEvent(
+  val event: String,
+  val id: Number,
+  val payload: js.Any,
+  val protocol: String, // 'http' | 'https'
+  val host: String,
+  val url: String,
+) extends js.Object
