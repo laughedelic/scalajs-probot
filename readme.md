@@ -36,7 +36,7 @@ For the usage example refer to the [scalafmt-probot](https://github.com/laughede
 
     * If it's a Scala.js project use [scalajs-bundler] and add to your `build.sbt`:
         ```scala
-        Compile/npmDependencies += "probot" -> "7.0.0-typescript.4"
+        Compile/npmDependencies += "probot" -> "next"
         ```
 
     These facades are based on the [TypeScript version of Probot](https://github.com/probot/probot/pull/372) which is not released yet, but is available under the `next` version tag.
@@ -48,6 +48,31 @@ For the usage example refer to the [scalafmt-probot](https://github.com/laughede
     ```
     (see the latest release version on the badge above)
 
+3. To turn the project into a runnable application add to your `build.sbt`:
+    ```scala
+    scalaJSUseMainModuleInitializer := true
+    ```
+
+    Then in the code implement a `Probot.Plugin` (which is a function `Application => Unit`) and define a `main` method:
+    ```scala
+    import laughedelic.probot._
+
+    object ProbotApp {
+
+      def plugin(app: Application): Unit = ???
+
+      def main(args: Array[String]): Unit = ProbotApp.run(plugin)
+    }
+    ```
+    See the [example](#example) below.
+
+4. (Optionally) for local testing you may want to add a dependency on the smee-client
+    ```scala
+    Compile/npmDependencies += "smee-client" -> "1.0.1"
+    ```
+
+    Then you can run the application with `sbt run` it should work the same as the `npm start` (=`probot run ./lib/index.js`) from the [Probot docs](https://probot.github.io/docs/development/#running-the-app-locally). The only difference is that it ignores any command line args, so I have to set environment variables. You can set them in the `.env` file.
+
 </details>
 
 ### Example
@@ -55,14 +80,12 @@ For the usage example refer to the [scalafmt-probot](https://github.com/laughede
 Here's a translation of the [Hello World example](https://probot.github.io/docs/hello-world/) from the Probot docs to Scala:
 
 ```scala
-import scala.scalajs.js, js.annotation._
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import laughedelic.probot._
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 object HelloWorld {
 
-  @JSExportTopLevel("probot")
-  def probot(app: Application): Unit = {
+  def plugin(app: Application): Unit = {
 
     app.on("issues.opened") { context =>
       // Post a comment on every new issue
@@ -74,6 +97,8 @@ object HelloWorld {
       )
     }
   }
+
+  def main(args: Array[String]): Unit = Probot.run(plugin)
 }
 ```
 
